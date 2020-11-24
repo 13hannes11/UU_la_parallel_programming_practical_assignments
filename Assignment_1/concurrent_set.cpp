@@ -1,6 +1,8 @@
+#pragma once
+
 #include <mutex>
-//#include"set.cpp"
-//#include"adt_set.cpp"
+#include"set.cpp"
+#include"adt_set.cpp"
 
 class ConcurrentSet {
     Set cset;
