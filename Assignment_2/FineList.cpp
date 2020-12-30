@@ -49,23 +49,23 @@ bool Set::add(int element) {
         p->unlock();
         p = c;
         c = c->next;
-        c->lock();
-
-        if (c->data == element) {
-            c->unlock();
-            p->unlock();
-            return false;
-        }       
+        c->lock();     
     }
 
-    Node* n = new Node();
-    n->data = element;
-    n->next = c;
-    p->next = n;
-    
-    c->unlock();
-    p->unlock();
-    return true; 
+    if (c->data == element) {
+        c->unlock();
+        p->unlock();
+        return false;
+    }  else {
+        Node* n = new Node();
+        n->data = element;
+        n->next = c;
+        p->next = n;
+        
+        c->unlock();
+        p->unlock();
+        return true; 
+    }
 }
 
 bool Set::rmv(int element) {
@@ -77,20 +77,20 @@ bool Set::rmv(int element) {
     while (c->data < element) {
         p->unlock();
         c = c->next;
-        c->lock();
-        if (c->data == element) {
-            p->next = c->next;
-            
-            c->unlock();
-            p->unlock();
-            return true;
-        }
-        
+        c->lock();        
     }
 
-    c->unlock();
-    p->unlock();
-    return false;
+    if (c->data == element) {
+        p->next = c->next;
+
+        c->unlock();
+        p->unlock();
+        return true;
+    } else {
+        c->unlock();
+        p->unlock();
+        return false;
+    }
 }
 bool Set::ctn(int element) {
     this->first->lock();
@@ -102,14 +102,15 @@ bool Set::ctn(int element) {
         p->unlock();
         c = c->next;
         c->lock();
-        if (c->data == element) {            
-            c->unlock();
-            p->unlock();
-            return true;
-        }
     }
 
-    c->unlock();
-    p->unlock();
-    return false;
+    if (c->data == element) {            
+        c->unlock();
+        p->unlock();
+        return true;
+    } else {
+        c->unlock();
+        p->unlock();
+        return false;
+    }
 }
