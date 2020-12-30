@@ -14,9 +14,8 @@ class FineSet {
 };
 
 FineSet::FineSet(){
-    first = new Node(); // dummy node;
-    Node* last = new Node();
-    last->data = INT_MAX; // end node;
+    first = Node::Dummy(); // dummy node;
+    Node* last = Node::Dummy();
     first->next = last;
 }
 
@@ -25,20 +24,19 @@ bool FineSet::add(int element) {
     Node* p = this->first;
     Node* c = p->next;
     c->lock();
-    while (c->data < element) {
+    while (c->is_smaller_than(element)) {
         p->unlock();
         p = c;
         c = c->next;
         c->lock();     
     }
 
-    if (c->data == element) {
+    if (c->is_equal(element)) {
         c->unlock();
         p->unlock();
         return false;
     }  else {
-        Node* n = new Node();
-        n->data = element;
+        Node* n = new Node(element);
         n->next = c;
         p->next = n;
         
@@ -54,7 +52,7 @@ bool FineSet::rmv(int element) {
     Node* c = p->next;
     c->lock();
 
-    while (c->data < element) {
+    while (c->is_smaller_than(element)) {
         p->unlock();
         c = c->next;
         c->lock();        
@@ -78,13 +76,13 @@ bool FineSet::ctn(int element) {
     Node* c = p->next;
     c->lock();
 
-    while (c->data < element) {
+    while (c->is_smaller_than(element)) {
         p->unlock();
         c = c->next;
         c->lock();
     }
 
-    if (c->data == element) {            
+    if (c->is_equal(element)) {            
         c->unlock();
         p->unlock();
         return true;
