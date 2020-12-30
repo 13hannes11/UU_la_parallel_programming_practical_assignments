@@ -1,28 +1,39 @@
 #include <mutex>
 
 class Node { 
-public: 
-    int data; 
-    bool is_dummy;
-    Node* next;
-    std::mutex mut; 
+    protected:
+        int data; 
+        bool is_dummy;
+        std::mutex mut;
+
     public:
+        Node* next;
+
         Node(int element);
         static Node* Dummy();
+        //  Dummy();
+
         void lock();
         void unlock();
         bool is_smaller_than(int n);
+        bool is_smaller_than(Node* n);
         bool is_equal(int n);
 };
+
+
 Node::Node(int element){
-    this->data = element;
-    this->is_dummy = false;
+    data = element;
+    is_dummy = false;
 }
 
 Node* Node::Dummy(){
     Node* n = new Node(0);
     n->is_dummy = true;
     return n;
+}
+
+bool Node::is_smaller_than(Node* n) {
+    return this->is_smaller_than(n->data);
 }
 
 bool Node::is_smaller_than(int n) {

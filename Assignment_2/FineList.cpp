@@ -58,7 +58,7 @@ bool FineSet::rmv(int element) {
         c->lock();        
     }
 
-    if (c->data == element) {
+    if (c->is_equal(element)) {
         p->next = c->next;
 
         c->unlock();
