@@ -55,20 +55,41 @@ bool Set::add(int element) {
             c->unlock();
             p->unlock();
             return false;
-        }
-    }
-        
-        Node* n = new Node();
-        n->data = element;
-        n->next = c;
-        p->next = n;
-        
-        c->unlock();
-        p->unlock();
-        return true;        
+        }       
     }
 
+    Node* n = new Node();
+    n->data = element;
+    n->next = c;
+    p->next = n;
+    
+    c->unlock();
+    p->unlock();
+    return true; 
+}
+
 bool Set::rmv(int element) {
+    this->first->lock();
+    Node* p = this->first;
+    Node* c = p->next;
+    c->lock();
+
+    while (c->data < element) {
+        p->unlock();
+        c = c->next;
+        c->lock();
+        if (c->data == element) {
+            p->next = c->next;
+            
+            c->unlock();
+            p->unlock();
+            return true;
+        }
+        
+    }
+
+    c->unlock();
+    p->unlock();
     return false;
 }
 bool Set::ctn(int element) {
