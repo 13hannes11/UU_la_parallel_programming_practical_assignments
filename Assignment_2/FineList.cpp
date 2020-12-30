@@ -1,46 +1,26 @@
-#include<iostream>
-#include<thread>
-#include <algorithm>
-#include <queue>
-#include <mutex>
-#include <assert.h>
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
+
+#include"Node.cpp"
 
 // TODO: implement fine grained locking
 
-class Node { 
-public: 
-    int data; 
-    Node* next;
-    std::mutex mut; 
-    public:
-        void lock();
-        void unlock();
-};
-void Node::lock() {
-    this->mut.lock();
-} 
-void Node::unlock() {
-    this->mut.unlock();
-}
-
-class Set {
+class FineSet {
     Node* first;
     public:
-        Set();
+        FineSet();
         bool add(int element);
         bool rmv(int element);
         bool ctn(int element);
 };
 
-Set::Set(){
+FineSet::FineSet(){
     first = new Node(); // dummy node;
     Node* last = new Node();
     last->data = INT_MAX; // end node;
     first->next = last;
 }
 
-bool Set::add(int element) {
+bool FineSet::add(int element) {
     this->first->lock();
     Node* p = this->first;
     Node* c = p->next;
@@ -68,7 +48,7 @@ bool Set::add(int element) {
     }
 }
 
-bool Set::rmv(int element) {
+bool FineSet::rmv(int element) {
     this->first->lock();
     Node* p = this->first;
     Node* c = p->next;
@@ -92,7 +72,7 @@ bool Set::rmv(int element) {
         return false;
     }
 }
-bool Set::ctn(int element) {
+bool FineSet::ctn(int element) {
     this->first->lock();
     Node* p = this->first;
     Node* c = p->next;
