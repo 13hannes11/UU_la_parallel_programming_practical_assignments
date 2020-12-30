@@ -93,5 +93,23 @@ bool Set::rmv(int element) {
     return false;
 }
 bool Set::ctn(int element) {
+    this->first->lock();
+    Node* p = this->first;
+    Node* c = p->next;
+    c->lock();
+
+    while (c->data < element) {
+        p->unlock();
+        c = c->next;
+        c->lock();
+        if (c->data == element) {            
+            c->unlock();
+            p->unlock();
+            return true;
+        }
+    }
+
+    c->unlock();
+    p->unlock();
     return false;
 }
