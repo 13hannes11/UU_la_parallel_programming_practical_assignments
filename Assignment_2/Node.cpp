@@ -8,6 +8,7 @@ class Node {
 
     public:
         Node* next;
+        bool deleted;
 
         Node(int element);
         static Node* Dummy();
@@ -24,6 +25,7 @@ class Node {
 Node::Node(int element){
     data = element;
     is_dummy = false;
+    deleted = false;
 }
 
 Node* Node::Dummy(){
