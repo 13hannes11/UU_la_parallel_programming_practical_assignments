@@ -1,8 +1,11 @@
+#pragma once
+
 #include <bits/stdc++.h>
 
 #include"Node.cpp"
+#include"Set.cpp"
 
-class LazySet {
+class LazySet:public Set {
     protected:
         Node* first;
         std::tuple<Node*, Node*> locate(int element);
@@ -14,11 +17,7 @@ class LazySet {
         bool ctn(int element);
 };
 
-LazySet::LazySet(){
-    first = Node::Dummy(); // dummy node;
-    Node* last = Node::Dummy();
-    first->next = last;
-}
+LazySet::LazySet() : Set() { }
 
 bool LazySet::add(int element) {
     auto tuple = locate(element);

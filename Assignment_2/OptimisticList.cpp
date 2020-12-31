@@ -1,8 +1,11 @@
+#pragma once
+
 #include <bits/stdc++.h>
 
 #include"Node.cpp"
+#include"Set.cpp"
 
-class OptimisticSet {
+class OptimisticSet:public Set {
     protected:
         Node* first;
         bool validate(Node* p, Node* c);
@@ -14,11 +17,7 @@ class OptimisticSet {
         
 };
 
-OptimisticSet::OptimisticSet(){
-    first = Node::Dummy(); // dummy node;
-    Node* last = Node::Dummy();
-    first->next = last;
-}
+OptimisticSet::OptimisticSet() : Set() { }
 
 bool OptimisticSet::add(int element) {
     Node* p;

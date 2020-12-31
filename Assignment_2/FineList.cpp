@@ -1,10 +1,13 @@
+#pragma once
+
 #include <bits/stdc++.h>
 
 #include"Node.cpp"
+#include"Set.cpp"
 
 // TODO: implement fine grained locking
 
-class FineSet {
+class FineSet:public Set {
     Node* first;
     public:
         FineSet();
@@ -13,11 +16,7 @@ class FineSet {
         bool ctn(int element);
 };
 
-FineSet::FineSet(){
-    first = Node::Dummy(); // dummy node;
-    Node* last = Node::Dummy();
-    first->next = last;
-}
+FineSet::FineSet() : Set() { }
 
 bool FineSet::add(int element) {
     this->first->lock();
