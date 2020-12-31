@@ -8,7 +8,7 @@
 class LazySet:public Set {
     protected:
         Node* first;
-        std::tuple<Node*, Node*> locate(int element);
+        void locate(int element, Node* prev, Node* cur);
     
     public:
         LazySet();
@@ -20,9 +20,9 @@ class LazySet:public Set {
 LazySet::LazySet() : Set() { }
 
 bool LazySet::add(int element) {
-    auto tuple = locate(element);
-    Node* p = std::get<0>(tuple);
-    Node* c = std::get<1>(tuple);
+    Node* p;
+    Node* c;
+    locate(element, p, c);
 
     if (c->is_equal(element)) {
         p->unlock();
@@ -38,9 +38,9 @@ bool LazySet::add(int element) {
     }
 }
 bool LazySet::rmv(int element) {
-    auto tuple = locate(element);
-    Node* p = std::get<0>(tuple);
-    Node* c = std::get<1>(tuple);
+    Node* p;
+    Node* c;
+    locate(element, p, c);
 
     if (c->is_equal(element)) {
         c->deleted = true;
@@ -68,7 +68,10 @@ bool LazySet::ctn(int element) {
 }
 
 
-std::tuple<Node*, Node*> LazySet::locate(int element) {
+void LazySet::locate(int element, Node* prev, Node* cur) {
+    prev = Node::Dummy();
+    cur = Node::Dummy();
+
     Node* p = first;
     Node* c = p->next;
 
@@ -79,12 +82,10 @@ std::tuple<Node*, Node*> LazySet::locate(int element) {
     p->lock();
     c->lock();
     if (!p->deleted && !c->deleted && p->next == c) {
-        p->unlock();
-        c->unlock();
-        return {p, c};
+        prev = p;
+        cur = c;
     }
     
     p->unlock();
     c->unlock();
-    return {Node::Dummy(), Node::Dummy()};
 }
