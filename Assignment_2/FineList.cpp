@@ -5,8 +5,6 @@
 #include"Node.cpp"
 #include"Set.cpp"
 
-// TODO: implement fine grained locking
-
 class FineSet:public Set {
     Node* first;
     public:
