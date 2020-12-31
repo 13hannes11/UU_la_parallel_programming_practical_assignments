@@ -7,13 +7,13 @@ class Set {
         Set();
         Node* first;
     public:
-        virtual bool add(int element);
-        virtual bool rmv(int element);
-        virtual bool ctn(int element);
+        bool add(int element) { return false; };
+        bool rmv(int element) { return false; };
+        bool ctn(int element) { return false; };
 };
 
 Set::Set(){
-    first = Node::Dummy(); // dummy node;
+    first = Node::Dummy();
     Node* last = Node::Dummy();
     first->next = last;
 }
