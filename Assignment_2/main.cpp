@@ -160,18 +160,61 @@ int benchmark_set(Set *set, benchmark_parameters param) {
     return result.count; 
 }
 
+void benchmark(int minVal, int maxVal, benchmark_type b_type, int i){
+    switch (b_type) {
+        case benchmark_type::i:
+            std::cout << "i distribution with i:" << i;
+            break;
+        default:
+            std::cout << "uniform distribution";
+            break;
+    }
+    std::cout << " (input range: ["<< minVal << "," << maxVal <<"])" << std::endl;
+
+    std::vector<int> thread_counts{ 2, 4, 8, 16, 32, 64 };
+    std::cout << "set\\threads";
+
+    std::vector<Set*> sets{new FineSet(), new OptimisticSet(), new LazySet()};
+
+
+    for (int thread_count : thread_counts) {
+        std::cout << ";" << thread_count;
+    }
+    std::cout << std::endl;
+
+    for (Set* set : sets) {
+        std::cout << typeid(set).name();
+
+        for (int thread_count : thread_counts) {
+            
+            benchmark_parameters params;
+            params.type = b_type;
+            params.minVal = minVal;
+            params.maxVal = maxVal;
+            params.i = i;
+            params.duration_in_seconds = TEST_TIME_SECONDS;
+            params.thread_count = thread_count;
+
+            int count = benchmark_set(set, params);
+            std::cout << ";" << count;
+        }
+        std::cout << std::endl;
+    }
+}
+
 int main(){
-    Set * fineSet = new FineSet();
+    std::vector<int> max_counts{ 7, 1023};
+    std::vector<int> i_values{10, 50, 90};
 
-    benchmark_parameters params;
-    params.type = benchmark_type::uniform;
-    params.minVal = 0;
-    params.maxVal = 7;
-    params.duration_in_seconds = 10;
-    params.thread_count = 2;
+    for (int max : max_counts) {
+        benchmark(0, max, benchmark_type::uniform, 0);
+    }
 
-    int count = benchmark_set(fineSet, params);
+    for (int i : i_values) {
+        for (int max : max_counts) {
+            benchmark(0, max, benchmark_type::i, i);
+        }
+    }
 
-    std::cout<<"Throughput in 10s: "<< count <<std::endl;
     return 0;
 }
