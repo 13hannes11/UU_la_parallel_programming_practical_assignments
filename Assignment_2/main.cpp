@@ -9,9 +9,16 @@
 
 using namespace std::chrono;
 
+#define DEBUG false
+
+#if DEBUG
+#define DEBUG_MSG(str) do { std::cout << str << std::endl; } while( false )
+#else
+#define DEBUG_MSG(str) do { } while ( false )
+#endif
 
 #define TEST_TIME_SECONDS 10
-#define OP_COUNT 1000
+#define OP_COUNT 100000
 
 enum methodname {add, rmv, ctn, noop};
 typedef struct _operation{
@@ -25,10 +32,12 @@ typedef struct _benchmark_parameters{
   int i;
   int maxVal;
   int minVal;
+  int duration_in_seconds; 
+  int thread_count;
 } benchmark_parameters;
 
 typedef struct _benchmark_result{
-    int count;
+    long count;
     std::mutex mutex;
 } benchmark_result;
 
@@ -73,7 +82,7 @@ void generate_operations_uniform(std::vector<operation> *operations, int minVal,
 }
 
 void generate_operations(std::vector<operation> *operations, int minVal, int maxVal, int i) {
-int range_size = maxVal - minVal;
+    int range_size = maxVal - minVal;
     for (auto op = operations->begin(); op != operations->end(); op++) {
         op->input = (rand() % range_size) + minVal;
 
@@ -85,31 +94,43 @@ int range_size = maxVal - minVal;
             op->method = methodname::rmv;
         }
     }
+    DEBUG_MSG("Generated operations with i = "<< i);
 }
 
-int time_delta(high_resolution_clock::time_point first, high_resolution_clock::time_point second) {
-    return abs((first - second).count());
+std::chrono::duration<int64_t, std::nano> time_delta(high_resolution_clock::time_point first, high_resolution_clock::time_point second) {
+    if(first > second) {
+        return first - second;
+    } else {
+        return second - first;
+    }
 }
 
 void run_worker(benchmark_result * result, std::vector<operation>* operations, Set* set,high_resolution_clock::time_point start_time, int duration_in_seconds) {
     std::vector<operation>::iterator i = operations->begin();
-    int op_counter = 0;
-    while (time_delta(start_time, high_resolution_clock::now()) < duration_in_seconds * 1000) {
+    
+    DEBUG_MSG("Run worker");
+    long op_counter = 0;
+    while (time_delta(start_time, high_resolution_clock::now()) < std::chrono::seconds(duration_in_seconds)) {
+        
         do_operation(& *i, set);
         op_counter++;
 
         if(i == operations->end()) {
-            break;
+            i = operations->begin();
+        } else {
+            i++;
         }
-        i++;
     }
+    DEBUG_MSG("Op Counter: "<<op_counter);
     add_worker_result(result, op_counter);
 }
 
-int benchmark_set(Set *set, int duration_in_seconds, int thread_count, benchmark_parameters param) {
+int benchmark_set(Set *set, benchmark_parameters param) {
     operation noop;
     noop.method = methodname::noop;
     std::vector<operation> operations(OP_COUNT, noop);
+
+    
 
     switch (param.type) {
         case benchmark_type::uniform:
@@ -120,22 +141,23 @@ int benchmark_set(Set *set, int duration_in_seconds, int thread_count, benchmark
             break;
     }
 
-    std::vector<std::thread> workers(thread_count);
+    std::vector<std::thread> workers(param.thread_count);
    
     benchmark_result result;
     result.count = 0;
 
+    DEBUG_MSG("About to start benchmark");
     high_resolution_clock::time_point start_time = high_resolution_clock::now();
 
     for (auto & worker : workers) {
-        std::thread(run_worker, &result, &operations, set, start_time, TEST_TIME_SECONDS);
+        worker = std::thread(run_worker, &result, &operations, set, start_time, param.duration_in_seconds);
     }
 
-    for (auto & worker : workers) {
+    for (std::thread & worker : workers) {
         worker.join();
     }
-    return result.count;
-    
+
+    return result.count; 
 }
 
 int main(){
@@ -145,8 +167,10 @@ int main(){
     params.type = benchmark_type::uniform;
     params.minVal = 0;
     params.maxVal = 7;
+    params.duration_in_seconds = 10;
+    params.thread_count = 2;
 
-    int count = benchmark_set(fineSet, 10, 4, params);
+    int count = benchmark_set(fineSet, params);
 
     std::cout<<"Throughput in 10s: "<< count <<std::endl;
     return 0;
