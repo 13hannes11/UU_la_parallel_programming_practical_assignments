@@ -14,7 +14,7 @@ class FineSet:public Set {
         bool ctn(int element);
 };
 
-FineSet::FineSet() : Set() { }
+FineSet::FineSet() : Set("FineSet") { }
 
 bool FineSet::add(int element) {
     this->first->lock();

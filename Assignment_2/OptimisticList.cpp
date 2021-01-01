@@ -17,7 +17,7 @@ class OptimisticSet:public Set {
         
 };
 
-OptimisticSet::OptimisticSet() : Set() { }
+OptimisticSet::OptimisticSet() : Set("OptimisticSet") { }
 
 bool OptimisticSet::add(int element) {
     Node* p;

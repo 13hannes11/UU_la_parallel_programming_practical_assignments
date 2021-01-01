@@ -183,7 +183,7 @@ void benchmark(int minVal, int maxVal, benchmark_type b_type, int i){
     std::cout << std::endl;
 
     for (Set* set : sets) {
-        std::cout << typeid(set).name();
+        std::cout << set->get_name();
 
         for (int thread_count : thread_counts) {
             

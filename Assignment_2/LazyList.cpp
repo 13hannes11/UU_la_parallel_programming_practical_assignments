@@ -17,7 +17,7 @@ class LazySet:public Set {
         bool ctn(int element);
 };
 
-LazySet::LazySet() : Set() { }
+LazySet::LazySet() : Set("LazySet") { }
 
 bool LazySet::add(int element) {
     Node* p;
