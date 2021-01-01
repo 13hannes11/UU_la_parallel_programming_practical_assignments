@@ -3,3 +3,7 @@
 !*/*.h
 !.gitignore
 !*/*.sh
+!*/*.txt
+
+!test
+!lib

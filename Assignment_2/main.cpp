@@ -2,10 +2,10 @@
 #include <iostream>
 #include <stdlib.h>  
 
-#include "Set.cpp"
-#include "LazyList.cpp"
-#include "FineList.cpp"
-#include "OptimisticList.cpp"
+#include <lib/Set.cpp>
+#include <lib/LazyList.cpp>
+#include <lib/FineList.cpp>
+#include <lib/OptimisticList.cpp>
 
 using namespace std::chrono;
 
