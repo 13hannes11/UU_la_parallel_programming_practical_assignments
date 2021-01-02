@@ -10,6 +10,13 @@ TEST(FineSetTest, add1_add1) {
     ASSERT_FALSE(fl->add(1));
 }
 
+TEST(FineSetTest, add1_add2) {
+    FineSet * fl = new FineSet();
+
+    ASSERT_TRUE(fl->add(1));
+    ASSERT_TRUE(fl->add(2));
+}
+
 TEST(FineSetTest, add1_rmv1) {
     FineSet * fl = new FineSet();
     ASSERT_TRUE(fl->add(1));

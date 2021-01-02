@@ -11,6 +11,13 @@ TEST(LazySetTest, add1_add1) {
     ASSERT_FALSE(fl->add(1));
 }
 
+TEST(LazySetTest, add1_add2) {
+    LazySet * fl = new LazySet();
+
+    ASSERT_TRUE(fl->add(1));
+    ASSERT_TRUE(fl->add(2));
+}
+
 TEST(LazySetTest, add1_rmv1) {
     LazySet * fl = new LazySet();
     ASSERT_TRUE(fl->add(1));
