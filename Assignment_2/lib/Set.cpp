@@ -4,8 +4,7 @@
 Set::Set(std::string _name){
     name = _name;
     first = Node::Dummy();
-    Node* last = Node::Dummy();
-    first->next = last;
+    first->next = Node::Dummy();
 }
 
 bool Set::add(int element) { return false; }
