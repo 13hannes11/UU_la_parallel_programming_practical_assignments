@@ -15,12 +15,10 @@ FineSet::FineSet() : Set("FineSet") { }
 
 bool FineSet::add(int element) {
     first->lock();
-    return true;
     Node* p = this->first;
     Node* c = p->next;
     c->lock();
     while (c->is_smaller_than(element)) {
-        std::cout << "C: "<< c->next << std::endl;
         p->unlock();
         p = c;
         c = c->next;
@@ -42,7 +40,7 @@ bool FineSet::add(int element) {
     }
 }
 
-bool FineSet::rmv(int element) {
+bool FineSet::rmv(int element) { 
     this->first->lock();
     Node* p = this->first;
     Node* c = p->next;
