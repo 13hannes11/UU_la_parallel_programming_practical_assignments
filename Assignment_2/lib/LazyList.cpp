@@ -5,7 +5,7 @@
 
 class LazySet:public Set {
     protected:
-        void locate(int element, Node* prev, Node* cur);
+        void locate(int element, Node** prev, Node** cur);
     
     public:
         LazySet();
@@ -19,25 +19,23 @@ LazySet::LazySet() : Set("LazySet") { }
 bool LazySet::add(int element) {
     Node* p;
     Node* c;
-    locate(element, p, c);
+
+    locate(element, &p, &c);
 
     if (c->is_equal(element)) {
-        p->unlock();
-        c->unlock();
         return false;
     } else  {
         Node* n = new Node(element);
+        n->next = c;
         p->next = n;
-
-        p->unlock();
-        c->unlock();
         return true;
     }
 }
 bool LazySet::rmv(int element) {
+    std::cout<< "rmv " << element << std::endl;
     Node* p;
     Node* c;
-    locate(element, p, c);
+    locate(element, &p, &c);
 
     if (c->is_equal(element)) {
         c->deleted = true;
@@ -53,7 +51,7 @@ bool LazySet::rmv(int element) {
     }
 }
 bool LazySet::ctn(int element) {
-    Node* c = first;
+    Node* c = first->next;
     while (c->is_smaller_than(element)) {
         c = c->next;
     }
@@ -65,9 +63,9 @@ bool LazySet::ctn(int element) {
 }
 
 
-void LazySet::locate(int element, Node* prev, Node* cur) {
-    prev = Node::Dummy();
-    cur = Node::Dummy();
+void LazySet::locate(int element, Node** prev, Node** cur) {
+    *prev = Node::Dummy();
+    *cur = Node::Dummy();
 
     Node* p = first;
     Node* c = p->next;
@@ -78,9 +76,10 @@ void LazySet::locate(int element, Node* prev, Node* cur) {
     }
     p->lock();
     c->lock();
+
     if (!p->deleted && !c->deleted && p->next == c) {
-        prev = p;
-        cur = c;
+        *prev = p;
+        *cur = c;
     }
     
     p->unlock();
