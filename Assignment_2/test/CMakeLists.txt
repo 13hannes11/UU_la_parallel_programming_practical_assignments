@@ -6,10 +6,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+add_executable(node_unit_test Node_test.cpp)
+target_link_libraries(node_unit_test PUBLIC gtest gtest_main)
+target_link_libraries(node_unit_test PUBLIC sets)
+add_test(NodeTest node_unit_test)
+
 add_executable(fine_unit_test FineSet_test.cpp)
 target_link_libraries(fine_unit_test PUBLIC gtest gtest_main)
 target_link_libraries(fine_unit_test PUBLIC sets)
-
 add_test(FineSetTest fine_unit_test)
 
 
