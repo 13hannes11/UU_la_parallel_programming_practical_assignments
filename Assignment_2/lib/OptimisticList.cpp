@@ -114,7 +114,7 @@ bool OptimisticSet::ctn(int element) {
 
 bool OptimisticSet::validate(Node* p, Node* c) {
     Node* n = this->first;
-    while (n->is_smaller_than(p)) {
+    while(n->next != c && n->next != 0) {
         n = n->next;
     }
     if ((n == p) && (p->next == c)) {
