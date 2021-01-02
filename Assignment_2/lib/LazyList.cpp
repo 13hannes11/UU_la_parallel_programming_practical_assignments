@@ -2,7 +2,7 @@
 
 #include <bits/stdc++.h>
 
-#include"Node.cpp"
+#include"Node.h"
 #include"Set.cpp"
 
 class LazySet:public Set {

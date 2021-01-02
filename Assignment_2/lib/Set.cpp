@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Node.cpp"
+#include "Node.h"
 
 class Set {
     protected:
