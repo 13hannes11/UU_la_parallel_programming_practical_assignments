@@ -3,13 +3,13 @@
 
 Node::Node(int element){
     data = element;
-    is_dummy = false;
+    dummy = false;
     deleted = false;
 }
 
 Node* Node::Dummy(){
     Node* n = new Node(0);
-    n->is_dummy = true;
+    n->dummy = true;
     return n;
 }
 
@@ -19,12 +19,12 @@ bool Node::is_smaller_than(Node* n) {
 
 bool Node::is_smaller_than(int n) {
     // Everything is smaller than a dummy -> false
-    return  this->data < n && !this->is_dummy;
+    return  this->data < n && !this->dummy;
 }
 
 bool Node::is_equal(int n) {
     // Dummies are not equal to any number -> false
-    return  this->data == n && !this->is_dummy;
+    return  this->data == n && !this->dummy;
 }
 
 void Node::lock() {
@@ -32,4 +32,12 @@ void Node::lock() {
 } 
 void Node::unlock() {
     this->mut.unlock();
+}
+
+bool Node::is_dummy() {
+    return dummy;
+}
+
+int Node::get_data(){
+    return data;
 }

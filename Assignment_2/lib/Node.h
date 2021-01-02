@@ -5,7 +5,7 @@
 class Node { 
     protected:
         int data; 
-        bool is_dummy;
+        bool dummy;
         std::mutex mut;
 
     public:
@@ -21,4 +21,6 @@ class Node {
         bool is_smaller_than(int n);
         bool is_smaller_than(Node* n);
         bool is_equal(int n);
+        bool is_dummy();
+        int get_data();
 };

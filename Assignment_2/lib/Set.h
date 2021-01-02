@@ -12,4 +12,5 @@ class Set {
         bool rmv(int element);
         bool ctn(int element);
         std::string get_name();
+        std::string print_set();
 };
