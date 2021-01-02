@@ -1,9 +1,7 @@
-#pragma once
-
 #include <bits/stdc++.h>
 
 #include"Node.h"
-#include"Set.cpp"
+#include"Set.h"
 
 class OptimisticSet:public Set {
     protected:

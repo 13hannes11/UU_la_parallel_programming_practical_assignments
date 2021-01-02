@@ -1,18 +1,5 @@
-#pragma once
-
+#include "Set.h"
 #include "Node.h"
-
-class Set {
-    protected:
-        std::string name;
-        Set(std::string _name);
-        Node* first;
-    public:
-        bool add(int element) { return false; };
-        bool rmv(int element) { return false; };
-        bool ctn(int element) { return false; };
-        std::string get_name() { return name; };
-};
 
 Set::Set(std::string _name){
     name = _name;
@@ -21,3 +8,7 @@ Set::Set(std::string _name){
     first->next = last;
 }
 
+bool Set::add(int element) { return false; }
+bool Set::rmv(int element) { return false; }
+bool Set::ctn(int element) { return false; }
+std::string Set::get_name() { return name; }

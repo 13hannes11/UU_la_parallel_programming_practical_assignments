@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 
 #include"Node.h"
-#include"Set.cpp"
+#include"Set.h"
 
 class FineSet:public Set {
     Node* first;
