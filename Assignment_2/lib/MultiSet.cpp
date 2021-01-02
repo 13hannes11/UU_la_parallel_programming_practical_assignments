@@ -4,7 +4,6 @@
 #include"Set.h"
 
 class MultiSet:public Set {
-    Node* first;
     public:
         MultiSet();
         bool add(int element);

@@ -5,7 +5,6 @@
 
 class LazySet:public Set {
     protected:
-        Node* first;
         void locate(int element, Node* prev, Node* cur);
     
     public:

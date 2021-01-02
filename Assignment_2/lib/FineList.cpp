@@ -1,12 +1,9 @@
-#pragma once
-
 #include <bits/stdc++.h>
 
 #include"Node.h"
 #include"Set.h"
 
 class FineSet:public Set {
-    Node* first;
     public:
         FineSet();
         bool add(int element);
@@ -17,11 +14,13 @@ class FineSet:public Set {
 FineSet::FineSet() : Set("FineSet") { }
 
 bool FineSet::add(int element) {
-    this->first->lock();
+    first->lock();
+    return true;
     Node* p = this->first;
     Node* c = p->next;
     c->lock();
     while (c->is_smaller_than(element)) {
+        std::cout << "C: "<< c->next << std::endl;
         p->unlock();
         p = c;
         c = c->next;

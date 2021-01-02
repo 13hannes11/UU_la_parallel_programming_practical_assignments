@@ -5,7 +5,6 @@
 
 class OptimisticSet:public Set {
     protected:
-        Node* first;
         bool validate(Node* p, Node* c);
     public:
         OptimisticSet();
