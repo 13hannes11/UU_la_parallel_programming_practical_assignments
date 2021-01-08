@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdlib.h>  
 
-#include <lib/Set.cpp>
+#include <lib/Stack.cpp>
 
 using namespace std::chrono;
 
@@ -16,22 +16,19 @@ using namespace std::chrono;
 
 #define OP_COUNT 100000
 
-enum methodname {add, rmv, ctn, noop};
+enum methodname {push, pop, size, noop};
 typedef struct _operation{
   methodname method;
   int input;
 } operation;
 
-void do_operation(operation* op, Set* set) {
+void do_operation(operation* op, Stack* set) {
     switch (op->method) {
-        case methodname::ctn:
-            set->ctn(op->input);
+        case methodname::push:
             break;
-        case methodname::add:
-            set->add(op->input);
+        case methodname::pop:
             break;
-        case methodname::rmv:
-            set->rmv(op->input);
+        case methodname::size:
             break;
         default:
             break;

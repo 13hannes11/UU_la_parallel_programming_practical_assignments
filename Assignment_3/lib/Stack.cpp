@@ -1,21 +1,19 @@
-#include "Set.h"
+#include "Stack.h"
 #include "Node.h"
 
 #include <iostream>
 #include<sstream>
 
-Set::Set(std::string _name){
-    name = _name;
+Stack::Stack(std::string _name){
     first = Node::Dummy();
     first->next = Node::Dummy();
 }
 
-bool Set::add(int element) { return false; }
-bool Set::rmv(int element) { return false; }
-bool Set::ctn(int element) { return false; }
-std::string Set::get_name() { return name; }
+bool Stack::push(int element) { return false; }
+bool Stack::pop(int element) { return false; }
+bool Stack::size(int element) { return false; }
 
-std::string Set::print_set(){
+std::string Stack::print_stack(){
     Node* c = this->first->next;
     std::stringstream ss;
     while (!c->is_dummy()) {
