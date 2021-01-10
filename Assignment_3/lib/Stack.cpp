@@ -10,9 +10,9 @@ Stack::Stack(ADTOperationQueue * queue){
     op_queue = queue;
 }
 
-bool Stack::push(int element) { return false; }
-bool Stack::pop(int element) { return false; }
-bool Stack::size(int element) { return false; }
+void Stack::push(int element) { return; }
+int Stack::pop() { return 0; }
+void Stack::size() { return 0; }
 
 std::string Stack::print_stack(){
     Node* c = this->first->next;

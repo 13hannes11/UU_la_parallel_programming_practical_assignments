@@ -9,8 +9,8 @@ class Stack {
         Stack(ADTOperationQueue * queue);
         Node* first;
     public:
-        bool push(int element);
-        bool pop(int element);
-        bool size(int element);
+        void push(int element);
+        int pop();
+        int size();
         std::string print_stack();
 };
