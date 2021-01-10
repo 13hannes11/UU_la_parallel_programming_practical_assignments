@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Node.h"
+#include "ADT_Stack.h"
 
 class Stack {
     protected:
-        std::string name;
-        Stack(std::string _name);
+        ADTOperationQueue * op_queue;
+        Stack(ADTOperationQueue * queue);
         Node* first;
     public:
         bool push(int element);

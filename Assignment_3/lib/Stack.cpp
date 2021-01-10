@@ -4,9 +4,10 @@
 #include <iostream>
 #include<sstream>
 
-Stack::Stack(std::string _name){
+Stack::Stack(ADTOperationQueue * queue){
     first = Node::Dummy();
     first->next = Node::Dummy();
+    op_queue = queue;
 }
 
 bool Stack::push(int element) { return false; }
