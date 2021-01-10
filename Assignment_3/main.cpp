@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>  
 
+#include <lib/ADT_Stack.h>
 #include <lib/Stack.cpp>
 
 using namespace std::chrono;
@@ -15,6 +16,7 @@ using namespace std::chrono;
 #endif
 
 #define OP_COUNT 100000
+#define THREADS 4
 
 enum methodname {push, pop, size, noop};
 typedef struct _operation{
@@ -77,6 +79,22 @@ void do_operation(operation* op, Stack* set) {
 //        do_operation(&op, set);
 //    }
 //}
+
+void run_checker(ADTOperationQueue queue, int* done_count) {
+    ADTStack * adt_stack = new ADTStack();
+    while(true) {
+        int finished = *done_count;
+        size_t queue_size = queue.size();
+        
+        if (finished >= THREADS && queue_size == 0) {
+            break;
+        } else {
+            operation op = queue.dequeue();
+            adt_stack->do_op(&op);
+        }
+    }
+    std::cout << "Done checking operations" << std::endl;
+}
 
 int main(){
     return 0;
