@@ -1,4 +1,5 @@
 #include<stdexcept>
+#include<sstream>
 
 #include "TreiberStack.h"
 #include "ADT_Stack.h"
@@ -43,4 +44,15 @@ int TreiberStack::size() {
     int c = count.load(std::memory_order_relaxed);
     op_queue->enqueue(create_operation(methodname::size, c));
     return c;    
+}
+
+std::string TreiberStack::print_stack(){
+    Node* c = this->top;
+    std::stringstream ss;
+    while (c != NULL) {
+        ss << c->get_data() << " ";
+        c = c->next;
+    }
+    std::string s = ss.str();
+    return s.substr(0, s.find_last_not_of(" ") + 1 );
 }

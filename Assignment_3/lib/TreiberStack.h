@@ -12,4 +12,5 @@ class TreiberStack:public Stack{
         void push(int element);
         int pop();
         int size();
+        std::string print_stack();
 };

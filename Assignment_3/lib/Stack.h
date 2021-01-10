@@ -7,7 +7,6 @@ class Stack {
     protected:
         ADTOperationQueue * op_queue;
         Stack(ADTOperationQueue * queue);
-        Node* first;
     public:
         void push(int element);
         int pop();
