@@ -18,58 +18,30 @@ using namespace std::chrono;
 #define OP_COUNT 100000
 #define THREADS 4
 
-enum methodname {push, pop, size, noop};
-typedef struct _operation{
-  methodname method;
-  int input;
-} operation;
+std::vector<operation> generate_operations_uniform(){
+    operation default_operation = create_operation(methodname::push, 0);
+    std::vector<operation> operations(OP_COUNT, default_operation);
 
-void do_operation(operation* op, Stack* set) {
-    switch (op->method) {
-        case methodname::push:
-            break;
-        case methodname::pop:
-            break;
-        case methodname::size:
-            break;
-        default:
-            break;
+    int stack_size = 0;
+    for (auto op = operations.begin(); op != operations.end(); op++) {
+        switch (rand() % 3) {
+            case 0:
+                if (stack_size > 0) {
+                    op->method = methodname::pop;
+                    stack_size--;
+                    break;
+                }
+            case 1:
+                op->method = methodname::push;
+                op->value = rand() % 20;
+                stack_size++;
+                break;
+            default:
+                op->method = methodname::size;
+                break;
+        }
     }
-};
-
-//void generate_operations_uniform(std::vector<operation> *operations, int minVal, int maxVal) {
-//    int range_size = maxVal - minVal;
-//    for (auto op = operations->begin(); op != operations->end(); op++) {
-//        op->input = (rand() % range_size) + minVal;
-//        switch (rand() % 3) {
-//            case 0:
-//                op->method = methodname::add;
-//                break;
-//            case 1:
-//                op->method = methodname::rmv;
-//                break;
-//            default:
-//                op->method = methodname::ctn;
-//                break;
-//        }
-//    }
-//}
-
-//void generate_operations(std::vector<operation> *operations, int minVal, int maxVal, int i) {
-//    int range_size = maxVal - minVal;
-//    for (auto op = operations->begin(); op != operations->end(); op++) {
-//        op->input = (rand() % range_size) + minVal;
-
-//        if (rand() % 100 < i) {
-//            op->method = methodname::ctn;
-//        } else if (rand() % 10 < 9) {
-//            op->method = methodname::add;            
-//        } else {
-//            op->method = methodname::rmv;
-//        }
-//    }
-//    DEBUG_MSG("Generated operations with i = "<< i);
-//}
+}
 
 //void run_worker(std::vector<operation>* operations, Set* set) {    
 //    DEBUG_MSG("Run worker");
