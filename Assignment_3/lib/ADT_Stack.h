@@ -1,3 +1,6 @@
+#ifndef ADT_Stack_H
+#define ADT_Stack_H
+
 #include <stack>
 #include <vector>
 #include <mutex>
@@ -31,3 +34,5 @@ class ADTOperationQueue{
     operation dequeue();
     size_t size();
 };
+
+#endif

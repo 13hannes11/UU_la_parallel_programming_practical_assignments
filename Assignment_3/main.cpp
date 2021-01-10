@@ -41,6 +41,7 @@ std::vector<operation> generate_operations_uniform(){
                 break;
         }
     }
+    return operations;
 }
 
 void run_worker(std::vector<operation>* operations, Stack* stack) {    

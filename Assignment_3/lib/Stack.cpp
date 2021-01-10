@@ -12,7 +12,7 @@ Stack::Stack(ADTOperationQueue * queue){
 
 void Stack::push(int element) { return; }
 int Stack::pop() { return 0; }
-void Stack::size() { return 0; }
+int Stack::size() { return 0; }
 
 std::string Stack::print_stack(){
     Node* c = this->first->next;
