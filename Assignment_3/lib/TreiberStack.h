@@ -5,6 +5,7 @@
 
 class TreiberStack:public Stack{
     private:
+        std::atomic<int> count;
         std::atomic<Node *> top;
     public:
         TreiberStack(ADTOperationQueue * queue);

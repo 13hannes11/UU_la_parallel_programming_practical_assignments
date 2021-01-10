@@ -4,7 +4,9 @@
 #include "ADT_Stack.h"
 
 
-TreiberStack::TreiberStack(ADTOperationQueue * queue) : Stack(queue) { }
+TreiberStack::TreiberStack(ADTOperationQueue * queue) : Stack(queue) { 
+    count.store(0);
+}
 
 void TreiberStack::push(int element) {
     Node * n;
@@ -15,6 +17,7 @@ void TreiberStack::push(int element) {
         n->next = t;
         if (top.compare_exchange_weak(t, n)) {
             op_queue->enqueue(create_operation(methodname::push, element));
+            count.fetch_add(1);
             return;
         }
     }
@@ -31,10 +34,13 @@ int TreiberStack::pop() {
         } else if (top.compare_exchange_weak(t, t->next)) {
             int data = t->get_data();
             op_queue->enqueue(create_operation(methodname::pop, data));
+            count.fetch_add(-1);
             return data;
         }
     }
 }
 int TreiberStack::size() { 
-    return 0;    
+    int c = count.load(std::memory_order_relaxed);
+    op_queue->enqueue(create_operation(methodname::size, c));
+    return c;    
 }
