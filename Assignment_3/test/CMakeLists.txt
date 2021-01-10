@@ -15,3 +15,8 @@ add_executable(adt_unit_test ADT_Stack_test.cpp)
 target_link_libraries(adt_unit_test PUBLIC gtest gtest_main)
 target_link_libraries(adt_unit_test PUBLIC sets)
 add_test(ADTTest adt_unit_test)
+
+add_executable(treiber_unit_test Treiber_Stack_test.cpp)
+target_link_libraries(treiber_unit_test PUBLIC gtest gtest_main)
+target_link_libraries(treiber_unit_test PUBLIC sets)
+add_test(TreiberTest treiber_unit_test)
