@@ -17,7 +17,7 @@ using namespace std::chrono;
 #define DEBUG_MSG(str) do { } while ( false )
 #endif
 
-#define OP_COUNT 100000
+#define OP_COUNT 1000000
 #define THREADS 4
 
 int done_count = 0;
@@ -85,7 +85,7 @@ void run_checker() {
             adt_stack->do_op(&op);
         }
     }
-    std::cout << "Done checking operations" << std::endl;
+    std::cout << std::endl << "Done checking operations" << std::endl;
 }
 
 int main(){
