@@ -1,5 +1,7 @@
 #include <stack>
 #include <vector>
+#include <mutex>
+#include <queue>
 
 enum methodname {push, pop, size, noop};
 typedef struct _operation{
@@ -18,4 +20,14 @@ class ADTStack {
         void size(int output);
         void do_op(operation * op);
         void do_ops(std::vector<operation> ops);
+};
+
+class ADTOperationQueue{
+  private:
+    std::queue<operation> queue;
+    std::mutex mutex;
+  public:
+    void enqueue(operation op);
+    operation dequeue();
+    size_t size();
 };

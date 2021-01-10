@@ -65,3 +65,22 @@ void ADTStack::do_ops(std::vector<operation> ops) {
     }
 }
 
+void ADTOperationQueue::enqueue(operation op) {
+    mutex.lock();
+    queue.push(op);
+    mutex.unlock();
+}
+operation ADTOperationQueue::dequeue() {
+    mutex.lock();
+    operation op = this->queue.front();
+    queue.pop();
+    mutex.unlock();
+    return op;
+}
+size_t ADTOperationQueue::size() {
+    this->mutex.lock();
+    size_t s = queue.size();
+    this->mutex.unlock();
+    return s;
+}
+
