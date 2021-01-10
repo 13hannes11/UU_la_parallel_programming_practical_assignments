@@ -43,14 +43,25 @@ std::vector<operation> generate_operations_uniform(){
     }
 }
 
-//void run_worker(std::vector<operation>* operations, Set* set) {    
-//    DEBUG_MSG("Run worker");
-//    long op_counter = 0;
-//    for (operation op : operations) {
-        /* code */
-//        do_operation(&op, set);
-//    }
-//}
+void run_worker(std::vector<operation>* operations, Stack* stack) {    
+    std::cout << "Worker: start" << std::endl;
+    long op_counter = 0;
+    for (operation op : *operations) {
+        switch (op.method) {
+            case methodname::pop:
+                stack->pop();
+            break;
+            case methodname::push:
+                stack->push(op.value);
+                break;
+            default:
+                stack->size();
+                break;
+        }
+    }
+
+     std::cout << "Worker: done" << std::endl;
+}
 
 void run_checker(ADTOperationQueue queue, int* done_count) {
     ADTStack * adt_stack = new ADTStack();
