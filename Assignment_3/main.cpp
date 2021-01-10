@@ -5,7 +5,7 @@
 
 #include <lib/ADT_Stack.h>
 #include <lib/Stack.cpp>
-#include <lib/SimpleLockingStack.h>
+#include <lib/TreiberStack.h>
 
 using namespace std::chrono;
 
@@ -68,9 +68,10 @@ void run_worker(Stack* stack) {
         }
     }
     done_mutex.lock();
+    std::cout << "Worker: done" << std::endl;
     done_count ++;
     done_mutex.unlock();
-    std::cout << "Worker: done" << std::endl;
+    
 }
 
 void run_checker() {
@@ -89,7 +90,7 @@ void run_checker() {
 }
 
 int main(){
-    Stack * s = new SimpleLockingStack(op_queue);
+    Stack * s = new TreiberStack(op_queue);
 
     std::thread *worker= new std::thread[THREADS];
 
