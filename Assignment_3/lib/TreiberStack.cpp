@@ -9,7 +9,7 @@ TreiberStack::TreiberStack(ADTOperationQueue * queue) : Stack(queue) {
 }
 
 void TreiberStack::push(int element) {
-    Node * n;
+    Node * n = new Node(element);
     Node * t;
 
     while (true) {
