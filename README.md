@@ -1,4 +1,4 @@
-# Uppsala University: parallel_programming_practical_assignments
+# Uppsala University: Language Abstraction for Parallel Programming
 
 This repository contains my hand in assingment code for the course "Language Abstraction for Parallel Programming".
 
